@@ -1,4 +1,16 @@
 RULES = [
+    # 1. Ponemos primero las reglas de acción crítica (como cancelar o asistencia)
+    {
+        "id": "R8",
+        "condiciones": ["cancelar", "anular", "borrar", "eliminar", "reiniciar"],
+        "conclusion": "Para eliminar un producto equivocado de tu lista de compras, selecciónalo en el resumen de la pantalla y presiona el botón de eliminar, o solicita ayuda al asistente si ya pasaste al método de pago."
+    },
+    {
+        "id": "R7",
+        "condiciones": ["ayuda", "asistencia", "empleado", "asesor", "supervisor", "atencion"],
+        "conclusion": "Si requieres asistencia del personal (por ejemplo, para anular un producto, verificar una edad o desbloquear la caja), presiona el botón rojo de 'Llamar Asistencia' en la pantalla."
+    },
+    # 2. Demás reglas...
     {
         "id": "R1",
         "condiciones": ["tarjeta", "credito", "debito", "nfc", "qr", "pago", "dinero", "efectivo"],
@@ -21,23 +33,13 @@ RULES = [
     },
     {
         "id": "R5",
-        "condiciones": ["factura", "recibo", "papel", "tirilla", "imprimir"],
-        "conclusion": "Si necesitas tu factura o comprobante de pago, recuerda verificar que la impresora tenga papel y retirarlo de la bandeja inferior al finalizar."
+        "condiciones": ["recibo", "papel", "tirilla", "imprimir"], # Quitamos "factura" de aquí para evitar conflictos si prefieres que se gestione por anulación
+        "conclusion": "Si necesitas tu factura o comprobante de pago, recuerda verificar que la impresora tenga papel y retirarlo de la bandeja inferior al finalizar, si necesitas asistencia del personal escribe la palabra ASISTENCIA."
     },
     {
         "id": "R6",
         "condiciones": ["bolsa", "empacar", "plastico", "ecologica"],
         "conclusion": "Puedes agregar tus bolsas reutilizables o plásticas en cualquier momento del proceso seleccionando la opción correspondiente en la pantalla táctil."
-    },
-    {
-        "id": "R7",
-        "condiciones": ["ayuda", "asistencia", "empleado", "asesor", "supervisor", "atencion"],
-        "conclusion": "Si requieres asistencia del personal (por ejemplo, para anular un producto, verificar una edad o desbloquear la caja), presiona el botón rojo de 'Llamar Asistencia' en la pantalla."
-    },
-    {
-        "id": "R8",
-        "condiciones": ["cancelar", "anular", "borrar", "eliminar", "reiniciar"],
-        "conclusion": "Para eliminar un producto equivocado de tu lista de compras, selecciónalo en el resumen de la pantalla y presiona el botón de eliminar, o solicita ayuda al asistente si ya pasaste al método de pago."
     },
     {
         "id": "R9",
@@ -48,13 +50,10 @@ RULES = [
 
 def evaluar_consulta(mensaje: str) -> str:
     mensaje_lc = mensaje.lower()
-    respuestas = []
 
+    # Recorremos las reglas en orden de prioridad
     for regla in RULES:
         if any(palabra in mensaje_lc for palabra in regla["condiciones"]):
-            respuestas.append(regla['conclusion'])
-
-    if respuestas:
-        return "\n\n".join(respuestas)
+            return regla['conclusion']  # Devuelve inmediatamente la primera coincidencia y termina
     
     return "Por favor, intenta describir si se trata de un medio de pago, una falla en el datáfono, pesaje de fruver, código de barras o asistencia general."

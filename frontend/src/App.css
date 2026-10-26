@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
+  background-color: #FFF0AB;
   margin: 0;
   padding: 0;
 }
@@ -16,7 +16,7 @@ body {
 
 .chat-container h2 {
   text-align: center;
-  color: #333;
+  color: black;
   margin-bottom: 20px;
 }
 
@@ -42,7 +42,7 @@ body {
 }
 
 .mensaje.usuario {
-  background: #dcf8c6;
+  background: #FFEF99;
   color: #111;
   align-self: flex-end;
   border-bottom-right-radius: 2px;
@@ -67,15 +67,17 @@ body {
   border-radius: 6px;
   font-size: 14px;
   outline: none;
+  background: #f5f6f7;
+  color: black;
 }
 
 .chat-input-form input:focus {
-  border-color: #007bff;
+  border-color: black;
 }
 
 .chat-input-form button {
   padding: 12px 20px;
-  background: #007bff;
+  background: #0855F8;
   color: white;
   border: none;
   border-radius: 6px;
@@ -83,6 +85,7 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
+
 
 .chat-input-form button:hover {
   background: #0056b3;
